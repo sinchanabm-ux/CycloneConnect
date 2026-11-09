@@ -13,3 +13,11 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+.venv/
+data/
+*.parquet
+*.npz
+*.npy
+*.tfrecord
+*.nc
