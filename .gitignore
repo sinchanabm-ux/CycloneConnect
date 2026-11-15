@@ -21,3 +21,9 @@ data/
 *.npy
 *.tfrecord
 *.nc
+# data (never commit)
+*.nc
+*.parquet
+*.tar.gz
+patches_full/
+samples_6h/
