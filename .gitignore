@@ -27,3 +27,7 @@ data/
 *.tar.gz
 patches_full/
 samples_6h/
+__pycache__/
+*.pyc
+*.keras
+.ipynb_checkpoints/
