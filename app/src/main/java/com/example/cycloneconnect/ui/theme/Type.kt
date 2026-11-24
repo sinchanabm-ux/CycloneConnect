@@ -1,34 +1,34 @@
 package com.example.cycloneconnect.ui.theme
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
+import com.example.cycloneconnect.R
 
-// Set of Material typography styles to start with
+val AppFont = FontFamily(
+    Font(R.font.atkinson_hyperlegible, FontWeight.Normal),
+    Font(R.font.atkinson_hyperlegible_bold, FontWeight.Bold),
+    Font(R.font.atkinson_hyperlegible_italic, FontWeight.ExtraLight),
+    Font(R.font.atkinson_hyperlegible_bold_italic, FontWeight.Light)
+
+)
+
+private val Base = Typography()
 val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
-    */
+    displayLarge = Base.displayLarge.copy(fontFamily = AppFont),
+    displayMedium = Base.displayMedium.copy(fontFamily = AppFont),
+    displaySmall = Base.displaySmall.copy(fontFamily = AppFont),
+    headlineLarge = Base.headlineLarge.copy(fontFamily = AppFont),
+    headlineMedium = Base.headlineMedium.copy(fontFamily = AppFont),
+    headlineSmall = Base.headlineSmall.copy(fontFamily = AppFont),
+    titleLarge = Base.titleLarge.copy(fontFamily = AppFont),
+    titleMedium = Base.titleMedium.copy(fontFamily = AppFont),
+    titleSmall = Base.titleSmall.copy(fontFamily = AppFont),
+    bodyLarge = Base.bodyLarge.copy(fontFamily = AppFont),
+    bodyMedium = Base.bodyMedium.copy(fontFamily = AppFont),
+    bodySmall = Base.bodySmall.copy(fontFamily = AppFont),
+    labelLarge = Base.labelLarge.copy(fontFamily = AppFont),
+    labelMedium = Base.labelMedium.copy(fontFamily = AppFont),
+    labelSmall = Base.labelSmall.copy(fontFamily = AppFont)
 )
