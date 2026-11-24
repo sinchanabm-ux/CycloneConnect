@@ -9,6 +9,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import com.example.cycloneconnect.ui.theme.mistBlue
 
 private val DarkColorScheme = darkColorScheme(
     primary = dustyDenim,
@@ -19,7 +20,11 @@ private val DarkColorScheme = darkColorScheme(
     background = inkBlack,
     onBackground = eggShell,
     surface = deepSpaceBlue,
-    onSurface = eggShell
+    onSurface = eggShell,
+    secondaryContainer = mistBlue,
+    onSecondaryContainer = inkBlack,
+    error = burningRed,
+    onError = eggShell
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -31,7 +36,11 @@ private val LightColorScheme = lightColorScheme(
     background = eggShell,
     onBackground = inkBlack,
     surface = eggShell,
-    onSurface = inkBlack
+    onSurface = inkBlack,
+    secondaryContainer = deepSpaceBlue,
+    onSecondaryContainer = eggShell,
+    error = burningRed,
+    onError = eggShell
 )
 
 @Composable

@@ -7,3 +7,7 @@ val deepSpaceBlue = Color(0xFF1D2D44)
 val blueState = Color(0xFF3E5C76)
 val dustyDenim = Color(0xFF748CAB)
 val eggShell = Color(0xFFF0EBD8)
+
+val mistBlue = Color(0xFF7C9FE0)
+
+val burningRed = Color(0xFFFF0000)

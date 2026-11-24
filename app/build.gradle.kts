@@ -48,6 +48,8 @@ dependencies {
     // Provides additional Material icons.
     implementation(libs.androidx.compose.material.icons.extended)
 
+// Handles navigation between Compose screens.
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
