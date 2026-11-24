@@ -1,33 +1,47 @@
 # CycloneConnect — Deep Learning
 
-This module focuses on forecasting cyclone wind speed using satellite imagery and deep-learning models.
+## Overview
+This component of CycloneConnect explores cyclone wind speed prediction using satellite imagery. It implements and compares two deep learning models: Convolutional Neural Network (CNN) and Convolutional LSTM (ConvLSTM).
 
-## Experiments
+## Workflow
+1. **Data Preparation:** Use Spark-generated datasets (`samples_6h` and `patches_full`).
+2. **Preprocessing:** Prepare satellite patches as 64 × 64 images and align them with cyclone observations using storm identifiers and timestamps.
+3. **Channel Selection:** Use Channel 1 because Channel 2 contains substantially more missing data.
+4. **Model Training:** Train CNN and ConvLSTM models to predict `TARGET_WIND`.
+5. **Evaluation:** Compare both models using MAE and RMSE on the same test observations.
 
-### 1. CNN Baseline
-A Convolutional Neural Network (CNN) will be trained as the baseline model to learn spatial features from satellite images and predict wind speed. Its performance will provide a reference for comparison with the ConvLSTM model.
+## Models
 
-### 2. ConvLSTM
-A Convolutional LSTM (ConvLSTM) model uses sequences of four satellite images, each separated by three hours, to learn spatial and temporal patterns and predict future cyclone wind speed.
+**CNN — Baseline Model**
+- Uses a single 64 × 64 satellite image.
+- Learns spatial features to predict wind speed.
 
-## Data Preparation
+**ConvLSTM — Temporal Model**
+- Uses four satellite images separated by three hours.
+- Learns spatial and temporal patterns across a nine-hour sequence.
 
-- Uses Spark-generated Parquet datasets: `samples_6h` and `patches_full`.
-- Checks timestamp alignment, missing values, and dataset splits.
-- Converts satellite patches into 64 × 64 images.
-- Matches image inputs with future `TARGET_WIND` labels.
-- Calculates normalization statistics using training data only.
+Both models were evaluated on 1,013 test observations using the same target-label definition.
 
-## Satellite Channel Selection
+## Results
 
-Channel 1 was selected because initial data-quality checks showed that Channel 2 contained substantially more missing data. This provides more usable imagery for the current experiments. It does not necessarily mean Channel 1 is more predictive; using both channels could be explored in future experiments.
+| Metric | CNN | ConvLSTM |
+|---|---:|---:|
+| Test observations | 1,013 | 1,013 |
+| MAE | 12.8231 knots | 12.5253 knots |
+| RMSE | 17.6671 knots | 17.0156 knots |
+
+**Conclusion:** ConvLSTM performed slightly better, reducing MAE by 2.32% and RMSE by 3.69% compared with CNN on the evaluated test observations.
 
 ## Project Structure
 
 ```text
 deep_learning/
-├── CycloneConnect.ipynb
+├── notebooks/
+│   ├── 01_CNN_Channel1.ipynb
+│   ├── 02_ConvLSTM_Channel1.ipynb
+│   └── 03_Model_Comparison.ipynb
 └── src/
+    ├── __init__.py
     ├── preprocessing.py
     ├── create_sequences.py
     ├── model.py
@@ -35,13 +49,19 @@ deep_learning/
     └── evaluate.py
 ```
 
-The notebook contains the primary experimental workflow. The `src/` directory contains reusable helper functions.
+- **notebooks/** — Model training, evaluation, and comparison experiments.
+- **src/** — Python modules intended for reusable preprocessing, sequence creation, model building, training, and evaluation.
 
-## Environment
+## Technologies
+Python, TensorFlow/Keras, NumPy, Pandas, Matplotlib, and PyArrow.
 
-The notebook is designed for Google Colab and uses the dataset archive at:
+## Running the Experiments
+The notebooks were developed in Google Colab and require access to the prepared datasets.
 
-`/content/drive/MyDrive/cyclone/cyclone_data.tar.gz`
+Run the notebooks in order:
+1. `01_CNN_Channel1.ipynb`
+2. `02_ConvLSTM_Channel1.ipynb`
+3. `03_Model_Comparison.ipynb`
 
 Install dependencies from the repository root:
 
@@ -49,6 +69,7 @@ Install dependencies from the repository root:
 pip install -r requirements.txt
 ```
 
-## Evaluation
-
-The CNN baseline and ConvLSTM will be compared using regression metrics such as Mean Absolute Error (MAE) and Root Mean Squared Error (RMSE).
+## Future Improvements
+- Experiment with additional satellite channels and sequence lengths.
+- Explore alternative model architectures and hyperparameters.
+- Improve prediction accuracy across different cyclone conditions.
