@@ -204,38 +204,61 @@ format.
 
 <h3>Intensity Classification Reference</h3>
 
-<p>Wind speed observations are interpreted using the following IMD intensity categories:</p>
+<p>
+  Wind speed observations are classified according to the India Meteorological Department (IMD) scale:
+</p>
 
 <table>
   <thead>
     <tr>
       <th>Category</th>
-      <th>Wind Speed</th>
+      <th>Abbreviation</th>
+      <th>Wind Speed (knots)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Depression (D)</td>
-      <td>17–27 knots</td>
+      <td>Depression</td>
+      <td>D</td>
+      <td>17–27</td>
     </tr>
     <tr>
-      <td>Deep Depression (DD)</td>
-      <td>28–33 knots</td>
+      <td>Deep Depression</td>
+      <td>DD</td>
+      <td>28–33</td>
     </tr>
     <tr>
-      <td>Cyclonic Storm (CS)</td>
-      <td>34–47 knots</td>
+      <td>Cyclonic Storm</td>
+      <td>CS</td>
+      <td>34–47</td>
     </tr>
     <tr>
-      <td>Severe Cyclonic Storm (SCS)</td>
-      <td>48–63 knots</td>
+      <td>Severe Cyclonic Storm</td>
+      <td>SCS</td>
+      <td>48–63</td>
     </tr>
     <tr>
-      <td>Very Severe Cyclonic Storm (VSCS+)</td>
-      <td>64 knots and above</td>
+      <td>Very Severe Cyclonic Storm</td>
+      <td>VSCS</td>
+      <td>64–89</td>
+    </tr>
+    <tr>
+      <td>Extremely Severe Cyclonic Storm</td>
+      <td>ESCS</td>
+      <td>90–119</td>
+    </tr>
+    <tr>
+      <td>Super Cyclonic Storm</td>
+      <td>SuCS</td>
+      <td>≥120</td>
     </tr>
   </tbody>
 </table>
+
+<p>
+  <strong>Note:</strong> KT (knot) = nautical miles per hour.
+  1 KT = 1.85 km/h.
+</p>
 
 ## 4. Deep Learning
 
