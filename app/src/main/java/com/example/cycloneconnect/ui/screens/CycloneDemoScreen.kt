@@ -23,10 +23,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.example.cycloneconnect.CyclonePredictor
+import com.example.cycloneconnect.CycloneModel
+import com.example.cycloneconnect.INTENSITY_SCALE
+import com.example.cycloneconnect.intensityCategory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
+
+// One model's outcome: either a wind speed or an error message.
+private data class ModelResult(
+    val model: CycloneModel,
+    val knots: Float? = null,
+    val error: String? = null
+)
 
 // DEMO-ONLY: delete this whole file after the demo.
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,16 +45,12 @@ fun CycloneDemoScreen(onBack: () -> Unit) {
 
     val context = LocalContext.current
 
-    // Holds the loaded preview image (null until it is loaded).
     var previewImage by remember { mutableStateOf<ImageBitmap?>(null) }
     var imageLoadFailed by remember { mutableStateOf(false) }
-    // DEMO-ONLY: prediction state.
-    var predictedKnots by remember { mutableStateOf<Float?>(null) }
+    var results by remember { mutableStateOf<List<ModelResult>>(emptyList()) }
     var isRunning by remember { mutableStateOf(false) }
-    var predictionError by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
 
-    // Loads the PNG from the assets folder on a background thread.
     LaunchedEffect(Unit) {
         try {
             previewImage = withContext(Dispatchers.IO) {
@@ -110,7 +116,7 @@ fun CycloneDemoScreen(onBack: () -> Unit) {
             }
 
             Text(
-                text = "Preview only. The model reads the numerical data, not this picture.",
+                text = "Preview only. The models read the numerical data, not this picture.",
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -119,65 +125,63 @@ fun CycloneDemoScreen(onBack: () -> Unit) {
                 onClick = {
                     scope.launch {
                         isRunning = true
-                        predictionError = null
-                        try {
-                            predictedKnots = withContext(Dispatchers.Default) {
-                                val predictor = CyclonePredictor(context)
+                        results = withContext(Dispatchers.Default) {
+                            CycloneModel.entries.map { model ->
                                 try {
-                                    predictor.predictSample()
-                                } finally {
-                                    predictor.close()
+                                    val predictor = CyclonePredictor(context, model)
+                                    try {
+                                        ModelResult(model, knots = predictor.predictSample())
+                                    } finally {
+                                        predictor.close()
+                                    }
+                                } catch (e: Exception) {
+                                    ModelResult(
+                                        model,
+                                        error = e.message ?: e.javaClass.simpleName
+                                    )
                                 }
                             }
-                        } catch (e: Exception) {
-                            predictedKnots = null
-                            predictionError = "Prediction failed: ${e.message}"
-                        } finally {
-                            isRunning = false
                         }
+                        isRunning = false
                     }
                 },
                 enabled = !isRunning,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 8.dp,
+                    pressedElevation = 2.dp
+                )
             ) {
-                Text(if (isRunning) "Running..." else "Run prediction")
+                Text(if (isRunning) "Running all models..." else "Run all 3 models")
             }
 
-            predictedKnots?.let { knots ->
-                val activeCategory = intensityCategory(knots)
-
-                ForecastMetric(
-                    title = "Model prediction: wind speed 6 hours ahead (experimental)",
-                    value = String.format(Locale.US, "%.1f knots", knots),
-                    modifier = Modifier.fillMaxWidth()
-                )
-                ForecastMetric(
-                    title = "Intensity category (derived from predicted wind, IMD table)",
-                    value = activeCategory,
-                    modifier = Modifier.fillMaxWidth()
-                )
+            if (results.isNotEmpty()) {
                 Text(
-                    text = "Demo output on a bundled historical sample. " +
+                    text = "PREDICTED WIND 6 HOURS AHEAD (EXPERIMENTAL)",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+
+                results.forEach { result -> ModelResultCard(result) }
+
+                Text(
+                    text = "Intensity is derived from each predicted wind speed using the IMD table. " +
+                            "Demo output on a bundled historical sample. " +
                             "Not an official forecast. Follow IMD bulletins for real warnings.",
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
-                val scaleItems = listOf(
-                    "< 17 kt" to "Below Depression threshold",
-                    "17 – 27 kt" to "Depression (D)",
-                    "28 – 33 kt" to "Deep Depression (DD)",
-                    "34 – 47 kt" to "Cyclonic Storm (CS)",
-                    "48 – 63 kt" to "Severe Cyclonic Storm (SCS)",
-                    "64 – 89 kt" to "Very Severe Cyclonic Storm (VSCS)",
-                    "90 – 119 kt" to "Extremely Severe Cyclonic Storm (ESCS)",
-                    "≥ 120 kt" to "Super Cyclonic Storm (SuCS)"
-                )
+                // Highlight every category that at least one model predicted.
+                val activeCategories = results
+                    .mapNotNull { it.knots }
+                    .map { intensityCategory(it) }
+                    .toSet()
 
                 Text(
                     text = buildAnnotatedString {
-                        scaleItems.forEachIndexed { index, (range, category) ->
-                            val isCurrent = category == activeCategory
+                        INTENSITY_SCALE.forEachIndexed { index, (range, category) ->
+                            val isCurrent = category in activeCategories
                             val rowColor = if (isCurrent) {
                                 MaterialTheme.colorScheme.primary
                             } else {
@@ -202,9 +206,7 @@ fun CycloneDemoScreen(onBack: () -> Unit) {
                                 append(category)
                             }
 
-                            if (index < scaleItems.lastIndex) {
-                                append("\n")
-                            }
+                            if (index < INTENSITY_SCALE.lastIndex) append("\n")
                         }
                     },
                     style = MaterialTheme.typography.labelSmall.copy(
@@ -213,28 +215,56 @@ fun CycloneDemoScreen(onBack: () -> Unit) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
-            predictionError?.let { message ->
+        }
+    }
+}
+
+// One card per model: name, what it reads, predicted wind and intensity label.
+@Composable
+private fun ModelResultCard(result: ModelResult) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Text(
+                text = result.model.displayName,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "Input: ${result.model.inputDescription}",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            val knots = result.knots
+            if (knots != null) {
+                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    ForecastMetric(
+                        title = "Wind speed",
+                        value = String.format(Locale.US, "%.1f knots", knots),
+                        modifier = Modifier.weight(1f)
+                    )
+                    ForecastMetric(
+                        title = "Intensity",
+                        value = intensityCategory(knots),
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            } else {
                 Text(
-                    text = message,
+                    text = "Could not run this model: ${result.error}",
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall
                 )
             }
         }
     }
-}
-
-// DEMO-ONLY: the CNN outputs only wind speed (knots). The category is
-// derived from that prediction using the IMD table, not predicted by the CNN.
-// Compares the unrounded value against the lower edge of each band.
-private fun intensityCategory(knots: Float): String = when {
-    !knots.isFinite() -> "Unavailable"
-    knots < 17f -> "Below Depression threshold"
-    knots < 28f -> "Depression (D)"
-    knots < 34f -> "Deep Depression (DD)"
-    knots < 48f -> "Cyclonic Storm (CS)"
-    knots < 64f -> "Severe Cyclonic Storm (SCS)"
-    knots < 90f -> "Very Severe Cyclonic Storm (VSCS)"
-    knots < 120f -> "Extremely Severe Cyclonic Storm (ESCS)"
-    else -> "Super Cyclonic Storm (SuCS)"
 }

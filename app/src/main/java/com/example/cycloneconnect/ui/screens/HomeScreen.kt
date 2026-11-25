@@ -21,6 +21,13 @@ import androidx.compose.ui.unit.dp
 import com.example.cycloneconnect.R
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.graphicsLayer
+import com.example.cycloneconnect.data.CoastalCity
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.cycloneconnect.AppRoutes
 import com.example.cycloneconnect.ui.theme.emergencyRed
@@ -44,9 +51,6 @@ fun HomeScreen(
 
     // Allows us to open and close the drawer using coroutines.
     val scope = rememberCoroutineScope()
-
-    // Stores the text entered in the location search field.
-    var searchQuery by remember { mutableStateOf("") }
 
     // Main navigation drawer containing the app menu.
     ModalNavigationDrawer(
@@ -254,11 +258,9 @@ fun HomeScreen(
 
                     // SEARCH OTHER LOCATIONS
                     item {
-                        LocationSearch(
-                            searchQuery = searchQuery,
-                            onSearchChange = { searchQuery = it },
-                            onSearch = {
-                                onNavigate(AppRoutes.SEARCH)
+                        CoastalCitySearch(
+                            onCitySelected = { city: CoastalCity ->
+                                onNavigate(AppRoutes.searchRoute(city.name))
                             }
                         )
                     }
@@ -530,44 +532,6 @@ fun ForecastMetric(
 
 
 // --------------------------------------------------
-// LOCATION SEARCH
-// Allows the user to enter another location.
-// --------------------------------------------------
-
-@Composable
-fun LocationSearch(
-    searchQuery: String,
-    onSearchChange: (String) -> Unit,
-    onSearch: () -> Unit
-) {
-    OutlinedTextField(
-        value = searchQuery,
-        onValueChange = onSearchChange,
-        modifier = Modifier.fillMaxWidth(),
-        placeholder = {
-            Text("Search other coastal areas")
-        },
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = "Search"
-            )
-        },
-        trailingIcon = {
-            IconButton(onClick = onSearch) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                    contentDescription = "Submit search"
-                )
-            }
-        },
-        singleLine = true,
-        shape = RoundedCornerShape(14.dp)
-    )
-}
-
-
-// --------------------------------------------------
 // SECTION HEADING
 // Reusable heading for different home page sections.
 // --------------------------------------------------
@@ -583,6 +547,68 @@ fun SectionHeading(title: String) {
 
 
 // --------------------------------------------------
+// ACTION CARD
+// Shared look for all tappable cards.
+// --------------------------------------------------
+
+// Shared look for everything that can be tapped: solid primary colour,
+// a drop shadow, and a small "press in" animation, so it never looks like a plain info card.
+@Composable
+fun ActionCard(
+    shape: Shape,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    content: @Composable ColumnScope.() -> Unit
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val pressed by interactionSource.collectIsPressedAsState()
+    val scale by animateFloatAsState(
+        targetValue = if (pressed) 0.96f else 1f,
+        label = "pressScale"
+    )
+
+    Card(
+        onClick = onClick,
+        modifier = modifier.graphicsLayer {
+            scaleX = scale
+            scaleY = scale
+        },
+        shape = shape,
+        interactionSource = interactionSource,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp,
+            pressedElevation = 2.dp
+        ),
+        content = content
+    )
+}
+
+// Round badge behind the icon on tappable cards.
+@Composable
+private fun IconBadge(icon: ImageVector) {
+    Box(
+        modifier = Modifier
+            .size(44.dp)
+            .background(
+                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.18f),
+                shape = CircleShape
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onPrimary,
+            modifier = Modifier.size(26.dp)
+        )
+    }
+}
+
+// --------------------------------------------------
 // FEATURE CARD
 // Used for Emergency Information and Family & Friends.
 // --------------------------------------------------
@@ -595,25 +621,16 @@ fun FeatureCard(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-    Card(
-        modifier = modifier
-            .heightIn(min = 150.dp)
-            .clickable { onClick() },
+    ActionCard(
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer
-        )
+        modifier = modifier.heightIn(min = 150.dp),
+        onClick = onClick
     ) {
         Column(
             modifier = Modifier.padding(14.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = title,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(30.dp)
-            )
+            IconBadge(icon)
 
             Text(
                 text = title,
@@ -623,13 +640,21 @@ fun FeatureCard(
 
             Text(
                 text = description,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                style = MaterialTheme.typography.bodySmall
             )
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                    contentDescription = "Open"
+                )
+            }
         }
     }
 }
-
 
 // --------------------------------------------------
 // NEWS CARD
@@ -643,26 +668,17 @@ fun NewsCard(
     icon: ImageVector,
     onClick: () -> Unit
 ) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() },
+    ActionCard(
         shape = RoundedCornerShape(14.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer
-        )
+        modifier = Modifier.fillMaxWidth(),
+        onClick = onClick
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = title,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(30.dp)
-            )
+            IconBadge(icon)
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
@@ -706,6 +722,10 @@ fun SOSSection(
                 .fillMaxWidth()
                 .height(64.dp),
             shape = RoundedCornerShape(16.dp),
+            elevation = ButtonDefaults.buttonElevation(
+                defaultElevation = 10.dp,
+                pressedElevation = 2.dp
+            ),
             colors = ButtonDefaults.buttonColors(
                 containerColor = emergencyRed,
                 contentColor = onEmergencyRed

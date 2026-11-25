@@ -54,6 +54,8 @@ dependencies {
     // Handles navigation between Compose screens.
     implementation(libs.androidx.navigation.compose)
 
+    implementation(libs.tensorflow.lite.select.tf.ops)
+
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)

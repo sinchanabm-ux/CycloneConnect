@@ -1,0 +1,850 @@
+[
+ {
+  "city": "Adirampattinam",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Agatti",
+  "state": "Lakshadweep"
+ },
+ {
+  "city": "Alang",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Alappuzha",
+  "state": "Kerala"
+ },
+ {
+  "city": "Alibag",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Amalapuram",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Amini",
+  "state": "Lakshadweep"
+ },
+ {
+  "city": "Androth",
+  "state": "Lakshadweep"
+ },
+ {
+  "city": "Anjuna",
+  "state": "Goa"
+ },
+ {
+  "city": "Ankola",
+  "state": "Karnataka"
+ },
+ {
+  "city": "Antarvedi",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Arambol",
+  "state": "Goa"
+ },
+ {
+  "city": "Astaranga",
+  "state": "Odisha"
+ },
+ {
+  "city": "Azhikkal",
+  "state": "Kerala"
+ },
+ {
+  "city": "Baga",
+  "state": "Goa"
+ },
+ {
+  "city": "Bakkhali",
+  "state": "West Bengal"
+ },
+ {
+  "city": "Balasore",
+  "state": "Odisha"
+ },
+ {
+  "city": "Bangaram",
+  "state": "Lakshadweep"
+ },
+ {
+  "city": "Bapatla",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Bedi",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Benaulim",
+  "state": "Goa"
+ },
+ {
+  "city": "Berhampur",
+  "state": "Odisha"
+ },
+ {
+  "city": "Beypore",
+  "state": "Kerala"
+ },
+ {
+  "city": "Bharuch",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Bhatkal",
+  "state": "Karnataka"
+ },
+ {
+  "city": "Bhavnagar",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Bheemunipatnam",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Bhitarkanika",
+  "state": "Odisha"
+ },
+ {
+  "city": "Calangute",
+  "state": "Goa"
+ },
+ {
+  "city": "Campbell Bay",
+  "state": "Andaman and Nicobar Islands"
+ },
+ {
+  "city": "Canacona",
+  "state": "Goa"
+ },
+ {
+  "city": "Candolim",
+  "state": "Goa"
+ },
+ {
+  "city": "Car Nicobar",
+  "state": "Andaman and Nicobar Islands"
+ },
+ {
+  "city": "Cavelossim",
+  "state": "Goa"
+ },
+ {
+  "city": "Chandipur",
+  "state": "Odisha"
+ },
+ {
+  "city": "Chavakkad",
+  "state": "Kerala"
+ },
+ {
+  "city": "Chennai",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Cherai",
+  "state": "Kerala"
+ },
+ {
+  "city": "Chilika",
+  "state": "Odisha"
+ },
+ {
+  "city": "Chirala",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Colachel",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Colva",
+  "state": "Goa"
+ },
+ {
+  "city": "Contai",
+  "state": "West Bengal"
+ },
+ {
+  "city": "Cuddalore",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Dahanu",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Dahej",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Daman",
+  "state": "Dadra and Nagar Haveli and Daman and Diu"
+ },
+ {
+  "city": "Dapoli",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Devgad",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Devipattinam",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Dhamra",
+  "state": "Odisha"
+ },
+ {
+  "city": "Dhanushkodi",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Diamond Harbour",
+  "state": "West Bengal"
+ },
+ {
+  "city": "Digha",
+  "state": "West Bengal"
+ },
+ {
+  "city": "Diglipur",
+  "state": "Andaman and Nicobar Islands"
+ },
+ {
+  "city": "Diu",
+  "state": "Dadra and Nagar Haveli and Daman and Diu"
+ },
+ {
+  "city": "Dwarka",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Ennore",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Frazerganj",
+  "state": "West Bengal"
+ },
+ {
+  "city": "Gandhidham",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Ganpatipule",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Gokarna",
+  "state": "Karnataka"
+ },
+ {
+  "city": "Gopalpur",
+  "state": "Odisha"
+ },
+ {
+  "city": "Guhagar",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Haldia",
+  "state": "West Bengal"
+ },
+ {
+  "city": "Harnai",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Havelock Island",
+  "state": "Andaman and Nicobar Islands"
+ },
+ {
+  "city": "Henry Island",
+  "state": "West Bengal"
+ },
+ {
+  "city": "Honnavar",
+  "state": "Karnataka"
+ },
+ {
+  "city": "Jafrabad",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Jaigad",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Jakhau",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Jamnagar",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Kadmat",
+  "state": "Lakshadweep"
+ },
+ {
+  "city": "Kakdwip",
+  "state": "West Bengal"
+ },
+ {
+  "city": "Kakinada",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Kalingapatnam",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Kalpeni",
+  "state": "Lakshadweep"
+ },
+ {
+  "city": "Kandla",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Kanhangad",
+  "state": "Kerala"
+ },
+ {
+  "city": "Kannur",
+  "state": "Kerala"
+ },
+ {
+  "city": "Kanyakumari",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Karaikal",
+  "state": "Puducherry"
+ },
+ {
+  "city": "Karwar",
+  "state": "Karnataka"
+ },
+ {
+  "city": "Kasaragod",
+  "state": "Kerala"
+ },
+ {
+  "city": "Kashid",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Kaup",
+  "state": "Karnataka"
+ },
+ {
+  "city": "Kavali",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Kavaratti",
+  "state": "Lakshadweep"
+ },
+ {
+  "city": "Kayamkulam",
+  "state": "Kerala"
+ },
+ {
+  "city": "Kelwa",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Khambhat",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Kilakarai",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Kochi",
+  "state": "Kerala"
+ },
+ {
+  "city": "Kolkata",
+  "state": "West Bengal"
+ },
+ {
+  "city": "Kollam",
+  "state": "Kerala"
+ },
+ {
+  "city": "Konark",
+  "state": "Odisha"
+ },
+ {
+  "city": "Kovalam",
+  "state": "Kerala"
+ },
+ {
+  "city": "Kovalam",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Kozhikode",
+  "state": "Kerala"
+ },
+ {
+  "city": "Krishnapatnam",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Kulasekarapattinam",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Kumta",
+  "state": "Karnataka"
+ },
+ {
+  "city": "Kundapura",
+  "state": "Karnataka"
+ },
+ {
+  "city": "Lakhpat",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Little Andaman",
+  "state": "Andaman and Nicobar Islands"
+ },
+ {
+  "city": "Machilipatnam",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Madhavpur",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Mahabalipuram",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Mahe",
+  "state": "Puducherry"
+ },
+ {
+  "city": "Mahuva",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Majorda",
+  "state": "Goa"
+ },
+ {
+  "city": "Mallipattinam",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Malpe",
+  "state": "Karnataka"
+ },
+ {
+  "city": "Malvan",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Manapad",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Mandapam",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Mandarmani",
+  "state": "West Bengal"
+ },
+ {
+  "city": "Mandvi",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Mangaluru",
+  "state": "Karnataka"
+ },
+ {
+  "city": "Mangrol",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Mapusa",
+  "state": "Goa"
+ },
+ {
+  "city": "Marakkanam",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Margao",
+  "state": "Goa"
+ },
+ {
+  "city": "Mayabunder",
+  "state": "Andaman and Nicobar Islands"
+ },
+ {
+  "city": "Minicoy",
+  "state": "Lakshadweep"
+ },
+ {
+  "city": "Mormugao",
+  "state": "Goa"
+ },
+ {
+  "city": "Mulki",
+  "state": "Karnataka"
+ },
+ {
+  "city": "Mumbai",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Munambam",
+  "state": "Kerala"
+ },
+ {
+  "city": "Mundra",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Murud",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Murudeshwar",
+  "state": "Karnataka"
+ },
+ {
+  "city": "Muttom",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Mypadu",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Nagapattinam",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Narasapuram",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Navi Mumbai",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Navsari",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Neendakara",
+  "state": "Kerala"
+ },
+ {
+  "city": "Neil Island",
+  "state": "Andaman and Nicobar Islands"
+ },
+ {
+  "city": "Nellore",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Okha",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Ongole",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Padubidri",
+  "state": "Karnataka"
+ },
+ {
+  "city": "Palghar",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Palolem",
+  "state": "Goa"
+ },
+ {
+  "city": "Pamban",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Panaji",
+  "state": "Goa"
+ },
+ {
+  "city": "Panvel",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Paradip",
+  "state": "Odisha"
+ },
+ {
+  "city": "Parangipettai",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Pazhaverkadu",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Pernem",
+  "state": "Goa"
+ },
+ {
+  "city": "Pipavav",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Ponnani",
+  "state": "Kerala"
+ },
+ {
+  "city": "Poompuhar",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Porbandar",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Port Blair",
+  "state": "Andaman and Nicobar Islands"
+ },
+ {
+  "city": "Puducherry",
+  "state": "Puducherry"
+ },
+ {
+  "city": "Pulicat",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Puri",
+  "state": "Odisha"
+ },
+ {
+  "city": "Quilandy",
+  "state": "Kerala"
+ },
+ {
+  "city": "Rajapur",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Rajula",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Ramanathapuram",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Ramayapatnam",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Rameswaram",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Rangat",
+  "state": "Andaman and Nicobar Islands"
+ },
+ {
+  "city": "Ratnagiri",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Revdanda",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Rushikulya",
+  "state": "Odisha"
+ },
+ {
+  "city": "Sagar Island",
+  "state": "West Bengal"
+ },
+ {
+  "city": "Satapada",
+  "state": "Odisha"
+ },
+ {
+  "city": "Shankarpur",
+  "state": "West Bengal"
+ },
+ {
+  "city": "Shrivardhan",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Sikka",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Sindhudurg",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Sirkazhi",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Somnath",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Srikakulam",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Sullurpeta",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Surat",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Surathkal",
+  "state": "Karnataka"
+ },
+ {
+  "city": "Surya Lanka",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Tajpur",
+  "state": "West Bengal"
+ },
+ {
+  "city": "Talasari",
+  "state": "Odisha"
+ },
+ {
+  "city": "Tarkarli",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Thalassery",
+  "state": "Kerala"
+ },
+ {
+  "city": "Thane",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Thiruvananthapuram",
+  "state": "Kerala"
+ },
+ {
+  "city": "Thiruvottiyur",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Thoothukudi",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Tiruchendur",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Tranquebar",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Udupi",
+  "state": "Karnataka"
+ },
+ {
+  "city": "Ullal",
+  "state": "Karnataka"
+ },
+ {
+  "city": "Uppada",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Uran",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Valsad",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Varkala",
+  "state": "Kerala"
+ },
+ {
+  "city": "Vasai-Virar",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Vasco da Gama",
+  "state": "Goa"
+ },
+ {
+  "city": "Vedaranyam",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Velankanni",
+  "state": "Tamil Nadu"
+ },
+ {
+  "city": "Vengurla",
+  "state": "Maharashtra"
+ },
+ {
+  "city": "Veraval",
+  "state": "Gujarat"
+ },
+ {
+  "city": "Visakhapatnam",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Vizhinjam",
+  "state": "Kerala"
+ },
+ {
+  "city": "Vodarevu",
+  "state": "Andhra Pradesh"
+ },
+ {
+  "city": "Wandoor",
+  "state": "Andaman and Nicobar Islands"
+ },
+ {
+  "city": "Yanam",
+  "state": "Puducherry"
+ }
+]

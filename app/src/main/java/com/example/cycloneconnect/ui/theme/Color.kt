@@ -10,6 +10,8 @@ val dustyDenim = Color(0xFF748CAB)
 val eggShell = Color(0xFFF0EBD8)
 val mistBlue = Color(0xFF7C9FE0)
 
+val brightSkyBlue = Color(0xFF8EB9FF)
+
 // Light theme surfaces
 val lightBackground = Color(0xFFF7F6F1)
 val lightSurface = Color(0xFFFFFEFA)

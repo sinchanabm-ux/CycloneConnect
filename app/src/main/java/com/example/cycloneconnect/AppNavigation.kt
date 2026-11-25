@@ -1,4 +1,3 @@
-
 package com.example.cycloneconnect
 
 import androidx.compose.runtime.Composable
@@ -14,7 +13,8 @@ object AppRoutes {
     const val HOME = "home"
     const val EMERGENCY = "emergency"
     const val FAMILY = "family"
-    const val SEARCH = "search"
+    const val SEARCH = "search/{city}"
+    fun searchRoute(city: String) = "search/${android.net.Uri.encode(city)}"
     const val NOTIFICATIONS = "notifications"
     const val VOLUNTEER = "volunteer"
     const val DONATE = "donate"
@@ -74,8 +74,9 @@ fun AppNavigation(
         }
 
         // Search screen
-        composable(AppRoutes.SEARCH) {
-            ComingSoonScreen("Search Locations") {
+        composable(AppRoutes.SEARCH) { backStackEntry ->
+            val city = backStackEntry.arguments?.getString("city") ?: "Search Locations"
+            ComingSoonScreen(city) {
                 navController.popBackStack()
             }
         }
