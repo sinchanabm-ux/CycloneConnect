@@ -69,6 +69,7 @@ flowchart TD
     E --> F[Data Cleaning and Alignment]
     F --> G[Storm-Centred Image Patches]
     G --> H[Processed Dataset]
+    G --> R[MongoDB]
 
     H --> I[Deep Learning]
     I --> J[CNN]
@@ -88,38 +89,57 @@ flowchart TD
 
 ### Architecture Components
 
-  -----------------------------------------------------------------------
-  Component               Technology              Responsibility
-  ----------------------- ----------------------- -----------------------
-  Data acquisition        NOAA, IBTrACS           Obtain satellite
-                                                  imagery and cyclone
-                                                  records
-
-  Distributed storage     Hadoop HDFS             Store large-scale
-                                                  satellite and processed
-                                                  datasets
-
-  Distributed processing  Apache Spark, PySpark   Clean, align, crop and
-                                                  prepare satellite data
-
-  Data analysis           MongoDB                 Support storm-record
-                                                  storage and complex
-                                                  queries
-
-  Deep Learning           TensorFlow/Keras        Train CNN and ConvLSTM
-                                                  models
-
-  Backend                 FastAPI                 Expose cyclone-related
-                                                  data through REST
-                                                  endpoints
-
-  Mobile application      Kotlin, Jetpack Compose Provide the user-facing
-                                                  disaster-management
-                                                  interface
-
-  On-device inference     TensorFlow Lite         Execute the bundled CNN
-                                                  model on Android
-  -----------------------------------------------------------------------
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Technology</th>
+      <th>Responsibility</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Data Acquisition</td>
+      <td>NOAA, IBTrACS</td>
+      <td>Obtain satellite imagery and cyclone records</td>
+    </tr>
+    <tr>
+      <td>Distributed Storage</td>
+      <td>Hadoop HDFS</td>
+      <td>Store large-scale satellite and processed datasets</td>
+    </tr>
+    <tr>
+      <td>Distributed Processing</td>
+      <td>Apache Spark, PySpark</td>
+      <td>Clean, align, crop and prepare satellite data</td>
+    </tr>
+    <tr>
+      <td>Data Analysis</td>
+      <td>MongoDB</td>
+      <td>Support storm-record storage and complex queries</td>
+    </tr>
+    <tr>
+      <td>Deep Learning</td>
+      <td>TensorFlow/Keras</td>
+      <td>Train CNN and ConvLSTM models</td>
+    </tr>
+    <tr>
+      <td>Backend</td>
+      <td>FastAPI</td>
+      <td>Expose cyclone-related data through REST endpoints</td>
+    </tr>
+    <tr>
+      <td>Mobile Application</td>
+      <td>Kotlin, Jetpack Compose</td>
+      <td>Provide the user-facing disaster-management interface</td>
+    </tr>
+    <tr>
+      <td>On-Device Inference</td>
+      <td>TensorFlow Lite</td>
+      <td>Execute the bundled CNN model on Android</td>
+    </tr>
+  </tbody>
+</table>
 
 ### Data Flow
 
@@ -182,20 +202,40 @@ pixel patches around cyclone centres. - Retains infrared image channels
 for downstream experiments. - Stores processed patches in Parquet
 format.
 
-### Intensity Classification Reference
+<h3>Intensity Classification Reference</h3>
 
-Wind speed observations are interpreted using the following IMD
-intensity categories:
+<p>Wind speed observations are interpreted using the following IMD intensity categories:</p>
 
-  Category                             Wind Speed
-  ------------------------------------ --------------------
-  Depression (D)                       17--27 knots
-  Deep Depression (DD)                 28--33 knots
-  Cyclonic Storm (CS)                  34--47 knots
-  Severe Cyclonic Storm (SCS)          48--63 knots
-  Very Severe Cyclonic Storm (VSCS+)   64 knots and above
-
-------------------------------------------------------------------------
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Wind Speed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Depression (D)</td>
+      <td>17–27 knots</td>
+    </tr>
+    <tr>
+      <td>Deep Depression (DD)</td>
+      <td>28–33 knots</td>
+    </tr>
+    <tr>
+      <td>Cyclonic Storm (CS)</td>
+      <td>34–47 knots</td>
+    </tr>
+    <tr>
+      <td>Severe Cyclonic Storm (SCS)</td>
+      <td>48–63 knots</td>
+    </tr>
+    <tr>
+      <td>Very Severe Cyclonic Storm (VSCS+)</td>
+      <td>64 knots and above</td>
+    </tr>
+  </tbody>
+</table>
 
 ## 4. Deep Learning
 
@@ -229,11 +269,27 @@ satellite images to learn spatial and temporal patterns.
 The CNN and ConvLSTM experiments were evaluated on the same 1,013 test
 observations.
 
-  Evaluation Metric               CNN        ConvLSTM
-  ------------------- --------------- ---------------
-  MAE                   12.8231 knots   12.5253 knots
-  RMSE                  17.6671 knots   17.0156 knots
-
+<table>
+  <thead>
+    <tr>
+      <th>Evaluation Metric</th>
+      <th>CNN</th>
+      <th>ConvLSTM</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>MAE</td>
+      <td>12.8231 knots</td>
+      <td>12.5253 knots</td>
+    </tr>
+    <tr>
+      <td>RMSE</td>
+      <td>17.6671 knots</td>
+      <td>17.0156 knots</td>
+    </tr>
+  </tbody>
+</table>
 **Observation:** ConvLSTM achieved slightly better performance, reducing
 MAE by 2.32% and RMSE by 3.69% compared with the CNN baseline.
 
@@ -326,19 +382,32 @@ The repository includes a FastAPI backend prototype.
 
 Current API endpoints:
 
-  --------------------------------------------------------------------------
-  Method                  Endpoint                   Description
-  ----------------------- -------------------------- -----------------------
-  GET                     `/health`                  Check backend
-                                                     availability
-
-  GET                     `/storms`                  Retrieve storm records
-                                                     with optional year and
-                                                     basin filters
-
-  GET                     `/storms/{sid}/timeline`   Retrieve a storm's
-                                                     timeline
-  --------------------------------------------------------------------------
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code>/health</code></td>
+      <td>Check backend availability</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code>/storms</code></td>
+      <td>Retrieve storm records with optional year and basin filters</td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code>/storms/{sid}/timeline</code></td>
+      <td>Retrieve a storm's timeline</td>
+    </tr>
+  </tbody>
+</table>
 
 The current backend uses sample in-memory storm records and timelines.
 Integration with the distributed processing pipeline and trained models
@@ -348,19 +417,27 @@ remains future work.
 
 ## 7. Technology Stack
 
-  Category                  Technologies
-  ------------------------- ----------------------------------------------
-  Programming Languages     Python, Kotlin
-  Big Data                  Hadoop HDFS, Apache Spark, PySpark
-  Scientific Computing      NumPy, Pandas, xarray, netCDF4, PyArrow
-  Data Storage              HDFS, Parquet, MongoDB (planned integration)
-  Deep Learning             TensorFlow, Keras
-  Model Architectures       CNN, ConvLSTM
-  Model Deployment          TensorFlow Lite
-  Backend                   Python, FastAPI
-  Android Development       Android Studio, Jetpack Compose
-  Build System              Gradle, Kotlin DSL
-  Distributed Environment   Ubuntu 22.04, WSL2, Tailscale
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Technologies</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Programming Languages</td><td>Python, Kotlin</td></tr>
+    <tr><td>Big Data</td><td>Hadoop HDFS, Apache Spark, PySpark</td></tr>
+    <tr><td>Scientific Computing</td><td>NumPy, Pandas, xarray, netCDF4, PyArrow</td></tr>
+    <tr><td>Data Storage</td><td>HDFS, Parquet, MongoDB (planned integration)</td></tr>
+    <tr><td>Deep Learning</td><td>TensorFlow, Keras</td></tr>
+    <tr><td>Model Architectures</td><td>CNN, ConvLSTM</td></tr>
+    <tr><td>Model Deployment</td><td>TensorFlow Lite</td></tr>
+    <tr><td>Backend</td><td>Python, FastAPI</td></tr>
+    <tr><td>Android Development</td><td>Android Studio, Jetpack Compose</td></tr>
+    <tr><td>Build System</td><td>Gradle, Kotlin DSL</td></tr>
+    <tr><td>Distributed Environment</td><td>Ubuntu 22.04, WSL2, Tailscale</td></tr>
+  </tbody>
+</table>
 
 ------------------------------------------------------------------------
 
@@ -428,28 +505,40 @@ CycloneConnect/
 
 ### Directory Description
 
-  -----------------------------------------------------------------------
-  Directory                           Purpose
-  ----------------------------------- -----------------------------------
-  `app/`                              Android application and on-device
-                                      CNN inference
-
-  `backend/`                          FastAPI backend prototype
-
-  `big_data/`                         Satellite acquisition, distributed
-                                      processing, and dataset preparation
-                                      scripts
-
-  `deep_learning/notebooks/`          CNN, ConvLSTM, and model comparison
-                                      experiments
-
-  `deep_learning/src/`                Reusable preprocessing, model
-                                      building, training, and evaluation
-                                      modules
-
-  `gradle/`                           Android build configuration and
-                                      dependency management
-  -----------------------------------------------------------------------
+<table>
+  <thead>
+    <tr>
+      <th>Directory</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>app/</code></td>
+      <td>Android application and on-device CNN inference</td>
+    </tr>
+    <tr>
+      <td><code>backend/</code></td>
+      <td>FastAPI backend prototype</td>
+    </tr>
+    <tr>
+      <td><code>big_data/</code></td>
+      <td>Satellite acquisition, distributed processing, and dataset preparation scripts</td>
+    </tr>
+    <tr>
+      <td><code>deep_learning/notebooks/</code></td>
+      <td>CNN, ConvLSTM, and model comparison experiments</td>
+    </tr>
+    <tr>
+      <td><code>deep_learning/src/</code></td>
+      <td>Reusable preprocessing, model building, training, and evaluation modules</td>
+    </tr>
+    <tr>
+      <td><code>gradle/</code></td>
+      <td>Android build configuration and dependency management</td>
+    </tr>
+  </tbody>
+</table>
 
 ------------------------------------------------------------------------
 
@@ -548,26 +637,36 @@ the cluster and required paths before executing them.
 The project is motivated by the following research and implementation
 gaps:
 
-  -----------------------------------------------------------------------
-  Identified Gap                      Proposed Approach
-  ----------------------------------- -----------------------------------
-  Disconnect between cyclone          Integrate cyclone intelligence and
-  forecasting and disaster response   emergency coordination in one
-                                      application
-
-  Dependence on cellular networks and BLE-based offline communication
-  internet                            
-
-  Lack of decentralized resource      Offline sharing of emergency
-  coordination                        requirements and available
-                                      resources
-
-  Computational challenges in deep    Distributed data processing and
-  learning                            cloud-based training
-
-  Difficulty prioritizing emergency   On-device NLP-based SOS
-  messages                            classification
-  -----------------------------------------------------------------------
+<table>
+  <thead>
+    <tr>
+      <th>Identified Gap</th>
+      <th>Proposed Approach</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Disconnect between cyclone forecasting and disaster response</td>
+      <td>Integrate cyclone intelligence and emergency coordination in one application</td>
+    </tr>
+    <tr>
+      <td>Dependence on cellular networks and internet</td>
+      <td>BLE-based offline communication</td>
+    </tr>
+    <tr>
+      <td>Lack of decentralized resource coordination</td>
+      <td>Offline sharing of emergency requirements and available resources</td>
+    </tr>
+    <tr>
+      <td>Computational challenges in deep learning</td>
+      <td>Distributed data processing and cloud-based training</td>
+    </tr>
+    <tr>
+      <td>Difficulty prioritizing emergency messages</td>
+      <td>On-device NLP-based SOS classification</td>
+    </tr>
+  </tbody>
+</table>
 
 ------------------------------------------------------------------------
 
