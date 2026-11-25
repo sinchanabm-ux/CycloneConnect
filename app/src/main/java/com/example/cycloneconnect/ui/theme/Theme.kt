@@ -1,61 +1,76 @@
 package com.example.cycloneconnect.ui.theme
 
-import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
-import com.example.cycloneconnect.ui.theme.mistBlue
-
-private val DarkColorScheme = darkColorScheme(
-    primary = dustyDenim,
-    onPrimary = inkBlack,
-    secondary = blueState,
-    onSecondary = eggShell,
-    tertiary = eggShell,
-    background = inkBlack,
-    onBackground = eggShell,
-    surface = deepSpaceBlue,
-    onSurface = eggShell,
-    secondaryContainer = mistBlue,
-    onSecondaryContainer = inkBlack,
-    error = burningRed,
-    onError = eggShell
-)
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.ui.graphics.Color
 
 private val LightColorScheme = lightColorScheme(
+
     primary = deepSpaceBlue,
     onPrimary = eggShell,
+
+    secondary = blueState,
+    onSecondary = Color(0xFFFFFFFF),
+
+    tertiary = dustyDenim,
+    onTertiary = inkBlack,
+
+    background = lightBackground,
+    onBackground = inkBlack,
+
+    surface = lightSurface,
+    onSurface = inkBlack,
+
+    surfaceVariant = lightBlueContainer,
+    onSurfaceVariant = blueState,
+
+    secondaryContainer = lightBlueContainer,
+    onSecondaryContainer = lightOnBlueContainer,
+
+    error = emergencyRed,
+    onError = onEmergencyRed
+)
+
+private val DarkColorScheme = darkColorScheme(
+
+    primary = dustyDenim,
+    onPrimary = inkBlack,
+
     secondary = blueState,
     onSecondary = eggShell,
-    tertiary = dustyDenim,
-    background = eggShell,
-    onBackground = inkBlack,
-    surface = eggShell,
-    onSurface = inkBlack,
-    secondaryContainer = deepSpaceBlue,
-    onSecondaryContainer = eggShell,
-    error = burningRed,
-    onError = eggShell
+
+    tertiary = mistBlue,
+    onTertiary = inkBlack,
+
+    background = darkBackground,
+    onBackground = eggShell,
+
+    surface = darkSurface,
+    onSurface = eggShell,
+
+    surfaceVariant = darkBlueContainer,
+    onSurfaceVariant = Color(0xFFD0D9E5),
+
+    secondaryContainer = darkBlueContainer,
+    onSecondaryContainer = darkOnBlueContainer,
+
+    error = emergencyRedDark,
+    onError = onEmergencyRedDark
 )
 
 @Composable
 fun CycloneConnectTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = false, // Changed to false so your custom palette is used
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+
+    val colorScheme = if (darkTheme) {
+        DarkColorScheme
+    } else {
+        LightColorScheme
     }
 
     MaterialTheme(
