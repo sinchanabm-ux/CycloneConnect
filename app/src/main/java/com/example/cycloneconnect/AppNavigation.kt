@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cycloneconnect.ui.screens.HomeScreen
 import com.example.cycloneconnect.ui.screens.ComingSoonScreen
+import com.example.cycloneconnect.ui.screens.CycloneDemoScreen // DEMO-ONLY
 
 // Stores the names of all app destinations.
 object AppRoutes {
@@ -25,6 +26,9 @@ object AppRoutes {
     const val SOS = "sos"
     const val OFFICIAL_ALERTS = "official_alerts"
     const val REGIONAL_NEWS = "regional_news"
+
+    // DEMO-ONLY: remove after the demo.
+    const val CNN_DEMO = "cnn_demo"
 }
 
 // Controls navigation between app screens.
@@ -136,6 +140,13 @@ fun AppNavigation(
             ComingSoonScreen("My Profile") {
                 navController.popBackStack()
             }
+        }
+
+        // DEMO-ONLY: remove after the demo.
+        composable(AppRoutes.CNN_DEMO) {
+            CycloneDemoScreen(
+                onBack = { navController.popBackStack() }
+            )
         }
     }
 }

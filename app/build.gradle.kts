@@ -45,11 +45,15 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
+    // TensorFlow Lite for on-device CNN inference
+    implementation(libs.tensorflow.lite)
+
     // Provides additional Material icons.
     implementation(libs.androidx.compose.material.icons.extended)
 
-// Handles navigation between Compose screens.
+    // Handles navigation between Compose screens.
     implementation(libs.androidx.navigation.compose)
+
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)

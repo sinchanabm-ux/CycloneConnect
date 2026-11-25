@@ -242,6 +242,16 @@ fun HomeScreen(
                         CycloneForecastCard()
                     }
 
+                    // DEMO-ONLY: remove after the demo.
+                    item {
+                        NewsCard(
+                            title = "Cyclone Intelligence (Demo)",
+                            description = "On-device CNN wind prediction on a sample image",
+                            icon = Icons.Default.Science,
+                            onClick = { onNavigate(AppRoutes.CNN_DEMO) }
+                        )
+                    }
+
                     // SEARCH OTHER LOCATIONS
                     item {
                         LocationSearch(
