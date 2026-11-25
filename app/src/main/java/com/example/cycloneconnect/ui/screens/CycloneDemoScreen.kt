@@ -38,6 +38,32 @@ private data class ModelResult(
     val error: String? = null
 )
 
+private data class EvaluationMetrics(
+    val mae: String,
+    val rmse: String
+)
+
+private fun getEvaluationMetrics(model: CycloneModel): EvaluationMetrics {
+    return when (model) {
+        CycloneModel.CNN -> EvaluationMetrics(
+            mae = "12.8231 knots",
+            rmse = "17.6671 knots"
+        )
+
+        CycloneModel.CONVLSTM -> EvaluationMetrics(
+            mae = "12.5253 knots",
+            rmse = "17.0156 knots"
+        )
+
+        CycloneModel.RESNET -> EvaluationMetrics(
+            mae = "12.9393 knots",
+            rmse = "16.3918 knots"
+        )
+    }
+}
+
+
+
 // DEMO-ONLY: delete this whole file after the demo.
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -164,13 +190,6 @@ fun CycloneDemoScreen(onBack: () -> Unit) {
 
                 results.forEach { result -> ModelResultCard(result) }
 
-                Text(
-                    text = "Intensity is derived from each predicted wind speed using the IMD table. " +
-                            "Demo output on a bundled historical sample. " +
-                            "Not an official forecast. Follow IMD bulletins for real warnings.",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
 
                 // Highlight every category that at least one model predicted.
                 val activeCategories = results
@@ -220,8 +239,12 @@ fun CycloneDemoScreen(onBack: () -> Unit) {
 }
 
 // One card per model: name, what it reads, predicted wind and intensity label.
+
 @Composable
 private fun ModelResultCard(result: ModelResult) {
+
+    val metrics = getEvaluationMetrics(result.model)
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
@@ -231,27 +254,48 @@ private fun ModelResultCard(result: ModelResult) {
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
+
+            // MODEL NAME
             Text(
                 text = result.model.displayName,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold
             )
+
             Text(
                 text = "Input: ${result.model.inputDescription}",
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
+            HorizontalDivider()
+
+            // LIVE MODEL PREDICTION
+            Text(
+                text = "MODEL PREDICTION",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.Bold
+            )
+
             val knots = result.knots
+
             if (knots != null) {
-                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
                     ForecastMetric(
                         title = "Wind speed",
-                        value = String.format(Locale.US, "%.1f knots", knots),
+                        value = String.format(
+                            Locale.US,
+                            "%.1f knots",
+                            knots
+                        ),
                         modifier = Modifier.weight(1f)
                     )
+
                     ForecastMetric(
                         title = "Intensity",
                         value = intensityCategory(knots),
@@ -265,6 +309,82 @@ private fun ModelResultCard(result: ModelResult) {
                     style = MaterialTheme.typography.bodySmall
                 )
             }
+
+            HorizontalDivider()
+
+            // MODEL EVALUATION
+            Text(
+                text = "MODEL EVALUATION METRICS",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.Bold
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(
+                        text = "MAE",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Text(
+                        text = metrics.mae,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+
+                    Text(
+                        text = "Mean Absolute Error",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(
+                        text = "RMSE",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Text(
+                        text = metrics.rmse,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+
+                    Text(
+                        text = "Root Mean Squared Error",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+
+            Text(
+                text = when (result.model) {
+                    CycloneModel.CNN ->
+                        "CNN: MAE of 12.8231 knots and RMSE of 17.6671 knots. " +
+                                "Provides the baseline performance for comparison."
+
+                    CycloneModel.CONVLSTM ->
+                        "ConvLSTM: Achieves the lowest MAE (12.5253 knots), " +
+                                "indicating the smallest average absolute prediction error."
+
+                    CycloneModel.RESNET ->
+                        "ResNet: Achieves the lowest RMSE (16.3918 knots), " +
+                                "indicating better performance when penalising larger prediction errors."
+                },
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
     }
 }
+
+
