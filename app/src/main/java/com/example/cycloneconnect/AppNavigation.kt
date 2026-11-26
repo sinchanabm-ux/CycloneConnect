@@ -6,7 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.cycloneconnect.ui.screens.HomeScreen
 import com.example.cycloneconnect.ui.screens.ComingSoonScreen
-import com.example.cycloneconnect.ui.screens.CycloneDemoScreen // DEMO-ONLY
+import com.example.cycloneconnect.ui.screens.ProfileScreen
+import com.example.cycloneconnect.ui.screens.LoginScreen
 
 // Stores the names of all app destinations.
 object AppRoutes {
@@ -23,12 +24,11 @@ object AppRoutes {
     const val SETTINGS = "settings"
     const val ABOUT = "about"
     const val PROFILE = "profile"
+    const val LOGIN = "login"
     const val SOS = "sos"
     const val OFFICIAL_ALERTS = "official_alerts"
     const val REGIONAL_NEWS = "regional_news"
 
-    // DEMO-ONLY: remove after the demo.
-    const val CNN_DEMO = "cnn_demo"
 }
 
 // Controls navigation between app screens.
@@ -138,16 +138,32 @@ fun AppNavigation(
         }
 
         composable(AppRoutes.PROFILE) {
-            ComingSoonScreen("My Profile") {
-                navController.popBackStack()
-            }
-        }
+            ProfileScreen(
+                onLoginClick = {
+                    navController.navigate(AppRoutes.LOGIN)
+                },
+                onRegisterClick = {
 
-        // DEMO-ONLY: remove after the demo.
-        composable(AppRoutes.CNN_DEMO) {
-            CycloneDemoScreen(
-                onBack = { navController.popBackStack() }
+                },
+                onBackClick = {
+                    navController.popBackStack()
+                }
             )
         }
+
+        composable(AppRoutes.LOGIN) {
+            LoginScreen(
+                onLoginClick = { email, password ->
+
+                },
+                onRegisterClick = {
+
+                },
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
     }
 }
