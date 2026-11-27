@@ -27,6 +27,9 @@ private val LightColorScheme = lightColorScheme(
     surfaceVariant = lightBlueContainer,
     onSurfaceVariant = blueState,
 
+    primaryContainer = lightBlueContainer,
+    onPrimaryContainer = lightOnBlueContainer,
+
     secondaryContainer = lightBlueContainer,
     onSecondaryContainer = lightOnBlueContainer,
 
@@ -53,6 +56,9 @@ private val DarkColorScheme = darkColorScheme(
 
     surfaceVariant = darkBlueContainer,
     onSurfaceVariant = Color(0xFFD0D9E5),
+
+    primaryContainer = darkBlueContainer,
+    onPrimaryContainer = darkOnBlueContainer,
 
     secondaryContainer = darkBlueContainer,
     onSecondaryContainer = darkOnBlueContainer,

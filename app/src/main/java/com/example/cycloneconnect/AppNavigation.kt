@@ -8,6 +8,7 @@ import com.example.cycloneconnect.ui.screens.HomeScreen
 import com.example.cycloneconnect.ui.screens.ComingSoonScreen
 import com.example.cycloneconnect.ui.screens.ProfileScreen
 import com.example.cycloneconnect.ui.screens.LoginScreen
+import com.example.cycloneconnect.ui.screens.RegisterScreen
 
 // Stores the names of all app destinations.
 object AppRoutes {
@@ -25,6 +26,7 @@ object AppRoutes {
     const val ABOUT = "about"
     const val PROFILE = "profile"
     const val LOGIN = "login"
+    const val REGISTER = "register"
     const val SOS = "sos"
     const val OFFICIAL_ALERTS = "official_alerts"
     const val REGIONAL_NEWS = "regional_news"
@@ -143,7 +145,7 @@ fun AppNavigation(
                     navController.navigate(AppRoutes.LOGIN)
                 },
                 onRegisterClick = {
-
+                    navController.navigate(AppRoutes.REGISTER)
                 },
                 onBackClick = {
                     navController.popBackStack()
@@ -157,8 +159,27 @@ fun AppNavigation(
 
                 },
                 onRegisterClick = {
+                    navController.navigate(AppRoutes.REGISTER)
+                },
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable(AppRoutes.REGISTER) {
+            RegisterScreen(
+
+                onRegisterClick = { name, email, password ->
+
+                    // Firebase registration will be implemented here.
 
                 },
+
+                onLoginClick = {
+                    navController.navigate(AppRoutes.LOGIN)
+                },
+
                 onBackClick = {
                     navController.popBackStack()
                 }

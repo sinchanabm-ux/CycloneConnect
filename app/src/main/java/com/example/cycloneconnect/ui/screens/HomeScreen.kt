@@ -70,6 +70,13 @@ fun HomeScreen(
 
                 HorizontalDivider()
 
+                DrawerItem("My Profile", Icons.Default.Person) {
+                    scope.launch {
+                        drawerState.close()
+                        onNavigate(AppRoutes.PROFILE)
+                    }
+                }
+
                 // Menu items are reusable composables.
 
                 DrawerItem("Home", Icons.Default.Home) {
