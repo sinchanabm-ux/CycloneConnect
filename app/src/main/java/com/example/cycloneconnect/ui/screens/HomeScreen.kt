@@ -1,7 +1,6 @@
 package com.example.cycloneconnect.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,7 +13,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -42,7 +40,6 @@ fun HomeScreen(
 ) {
 
     // Gets the current Android context for simple feedback messages.
-    val context = LocalContext.current
 
     // Controls whether the navigation drawer is open or closed.
     val drawerState = rememberDrawerState(
@@ -548,7 +545,7 @@ fun SectionHeading(title: String) {
 // Shared look for all tappable cards.
 // --------------------------------------------------
 
-// Shared look for everything that can be tapped: solid primary colour,
+// Shared look for everything that can be tapped: solid primary color,
 // a drop shadow, and a small "press in" animation, so it never looks like a plain info card.
 @Composable
 fun ActionCard(
