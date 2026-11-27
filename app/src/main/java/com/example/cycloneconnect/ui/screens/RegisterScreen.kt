@@ -107,7 +107,7 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
 
-// Full name
+            // Full name
             OutlinedTextField(
                 value = name,
                 onValueChange = {
@@ -136,7 +136,7 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-// Email
+            // Email
             OutlinedTextField(
                 value = email,
                 onValueChange = {
@@ -165,7 +165,7 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(14.dp))
 
-// Password
+            // Password
             OutlinedTextField(
                 value = password,
                 onValueChange = {

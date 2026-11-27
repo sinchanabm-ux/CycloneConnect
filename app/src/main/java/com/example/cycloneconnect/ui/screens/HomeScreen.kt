@@ -264,26 +264,23 @@ fun HomeScreen(
                         SectionHeading("Emergency Assistance")
                     }
 
-                    item {
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            FeatureCard(
-                                title = "Emergency Information",
-                                description = "Safety instructions and preparedness",
-                                icon = Icons.AutoMirrored.Filled.MenuBook,
-                                modifier = Modifier.weight(1f),
-                                onClick = { onNavigate(AppRoutes.EMERGENCY) }
-                            )
 
-                            FeatureCard(
-                                title = "Family & Friends",
-                                description = "Your important contacts",
-                                icon = Icons.Default.People,
-                                modifier = Modifier.weight(1f),
-                                onClick = { onNavigate(AppRoutes.FAMILY) }
-                            )
-                        }
+                    item {
+                        NewsCard(
+                            title = "Emergency Information",
+                            description = "Safety instructions and preparedness",
+                            icon = Icons.AutoMirrored.Filled.MenuBook,
+                            onClick = { onNavigate(AppRoutes.EMERGENCY) }
+                        )
+                    }
+
+                    item {
+                        NewsCard(
+                            title = "Family & Friends",
+                            description = "Your important contacts",
+                            icon = Icons.Default.People,
+                            onClick = { onNavigate(AppRoutes.FAMILY) }
+                        )
                     }
 
                     // NEWS
@@ -617,7 +614,7 @@ fun FeatureCard(
 ) {
     ActionCard(
         shape = RoundedCornerShape(16.dp),
-        modifier = modifier.heightIn(min = 150.dp),
+        modifier = modifier.heightIn(min = 200.dp),
         onClick = onClick
     ) {
         Column(
