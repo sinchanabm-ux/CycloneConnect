@@ -22,7 +22,11 @@ import com.example.cycloneconnect.R
 
 @Composable
 fun LoginScreen(
-    onLoginClick: (String, String) -> Unit,
+    onLoginClick: (
+        String,
+        String,
+        (Boolean, String?) -> Unit
+    ) -> Unit,
     onRegisterClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
@@ -182,7 +186,12 @@ fun LoginScreen(
                 }
 
                 if (errorMessage.isEmpty()) {
-                    onLoginClick(email.trim(), password)
+                    onLoginClick(email.trim(), password) { success, message ->
+
+                        if (!success) {
+                            errorMessage = message ?: "Login failed. Please try again."
+                        }
+                    }
                 }
             },
             modifier = Modifier

@@ -21,7 +21,12 @@ import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
 fun RegisterScreen(
-    onRegisterClick: (String, String, String) -> Unit,
+    onRegisterClick: (
+        String,
+        String,
+        String,
+        (Boolean, String?) -> Unit
+    ) -> Unit,
     onLoginClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
@@ -289,7 +294,12 @@ fun RegisterScreen(
                             name.trim(),
                             email.trim(),
                             password
-                        )
+                        ) { success, message ->
+
+                            if (!success) {
+                                errorMessage = message ?: "Registration failed. Please try again."
+                            }
+                        }
                     }
                 },
                 modifier = Modifier

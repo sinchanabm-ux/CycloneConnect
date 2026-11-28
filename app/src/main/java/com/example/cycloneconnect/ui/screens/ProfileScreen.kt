@@ -1,4 +1,3 @@
-
 package com.example.cycloneconnect.ui.screens
 
 import androidx.compose.foundation.Image
@@ -22,12 +21,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.cycloneconnect.R
 
+
 @Composable
 fun ProfileScreen(
+    userName: String?,
+    userEmail: String?,
     onLoginClick: () -> Unit,
     onRegisterClick: () -> Unit,
+    onLogoutClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
+
+    val isLoggedIn = !userEmail.isNullOrBlank()
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background,
@@ -97,12 +103,20 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Welcome!",
+                text = if (isLoggedIn && !userName.isNullOrBlank()) {
+                    "Welcome, $userName!"
+                } else {
+                    "Welcome!"
+                },
                 style = MaterialTheme.typography.headlineMedium
             )
 
             Text(
-                text = "Your CycloneConnect account",
+                text = if (isLoggedIn) {
+                    userEmail ?: ""
+                } else {
+                    "Your CycloneConnect account"
+                },
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -114,7 +128,7 @@ fun ProfileScreen(
                 color = MaterialTheme.colorScheme.secondaryContainer
             ) {
                 Text(
-                    text = "Guest Mode",
+                    text = if (isLoggedIn) "Signed In" else "Guest Mode",
                     modifier = Modifier.padding(
                         horizontal = 16.dp,
                         vertical = 6.dp
@@ -186,24 +200,48 @@ fun ProfileScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
 
-                    Text(
-                        text = "Get Started",
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
+                    if (isLoggedIn) {
 
-                    Button(
-                        onClick = onRegisterClick,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text("Create Account")
-                    }
+                        Text(
+                            text = "Account Settings",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
 
-                    OutlinedButton(
-                        onClick = onLoginClick,
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text("Already have an account? Login")
+                        Text(
+                            text = "You are signed in to CycloneConnect.",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+
+                        OutlinedButton(
+                            onClick = onLogoutClick,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Logout")
+                        }
+
+                    } else {
+
+                        Text(
+                            text = "Get Started",
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+
+                        Button(
+                            onClick = onRegisterClick,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Create Account")
+                        }
+
+                        OutlinedButton(
+                            onClick = onLoginClick,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Already have an account? Login")
+                        }
                     }
                 }
             }
@@ -214,10 +252,11 @@ fun ProfileScreen(
                 text = "You can continue using emergency resources " +
                         "without creating an account.",
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 20.dp)
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(40.dp))
         }
     }
 }

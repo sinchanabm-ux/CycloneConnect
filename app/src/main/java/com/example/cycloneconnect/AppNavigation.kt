@@ -9,6 +9,13 @@ import com.example.cycloneconnect.ui.screens.ComingSoonScreen
 import com.example.cycloneconnect.ui.screens.ProfileScreen
 import com.example.cycloneconnect.ui.screens.LoginScreen
 import com.example.cycloneconnect.ui.screens.RegisterScreen
+import com.example.cycloneconnect.data.AuthManager
+import com.google.firebase.auth.FirebaseAuth
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 // Stores the names of all app destinations.
 object AppRoutes {
@@ -40,6 +47,26 @@ fun AppNavigation(
     onThemeChange: (Boolean) -> Unit
 ) {
     val navController = rememberNavController()
+
+    val auth = remember {
+        FirebaseAuth.getInstance()
+    }
+
+    var currentUser by remember {
+        mutableStateOf(auth.currentUser)
+    }
+
+    DisposableEffect(auth) {
+        val authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+            currentUser = firebaseAuth.currentUser
+        }
+
+        auth.addAuthStateListener(authStateListener)
+
+        onDispose {
+            auth.removeAuthStateListener(authStateListener)
+        }
+    }
 
     NavHost(
         navController = navController,
@@ -141,6 +168,8 @@ fun AppNavigation(
 
         composable(AppRoutes.PROFILE) {
             ProfileScreen(
+                userName = currentUser?.displayName,
+                userEmail = currentUser?.email,
                 onLoginClick = {
                     navController.navigate(AppRoutes.LOGIN)
                 },
@@ -149,18 +178,45 @@ fun AppNavigation(
                 },
                 onBackClick = {
                     navController.popBackStack()
+                },
+                onLogoutClick = {
+                    auth.signOut()
+                    navController.navigate(AppRoutes.HOME) {
+                        popUpTo(AppRoutes.HOME) {
+                            inclusive = false
+                        }
+                        launchSingleTop = true
+                    }
                 }
             )
         }
 
         composable(AppRoutes.LOGIN) {
             LoginScreen(
-                onLoginClick = { email, password ->
+                onLoginClick = { email, password, onResult ->
 
+                    AuthManager().loginUser(
+                        email = email,
+                        password = password
+                    ) { success, message ->
+
+                        onResult(success, message)
+
+                        if (success) {
+                            navController.navigate(AppRoutes.HOME) {
+                                popUpTo(AppRoutes.HOME) {
+                                    inclusive = false
+                                }
+                                launchSingleTop = true
+                            }
+                        }
+                    }
                 },
+
                 onRegisterClick = {
                     navController.navigate(AppRoutes.REGISTER)
                 },
+
                 onBackClick = {
                     navController.popBackStack()
                 }
@@ -170,10 +226,24 @@ fun AppNavigation(
         composable(AppRoutes.REGISTER) {
             RegisterScreen(
 
-                onRegisterClick = { name, email, password ->
+                onRegisterClick = { name, email, password, onResult ->
+                    AuthManager().registerUser(
+                        name = name,
+                        email = email,
+                        password = password
+                    ) { success, message ->
 
-                    // Firebase registration will be implemented here.
+                        onResult(success, message)
 
+                        if (success) {
+                            navController.navigate(AppRoutes.HOME) {
+                                popUpTo(AppRoutes.HOME) {
+                                    inclusive = false
+                                }
+                                launchSingleTop = true
+                            }
+                        }
+                    }
                 },
 
                 onLoginClick = {
