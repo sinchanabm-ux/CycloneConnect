@@ -16,6 +16,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
+import com.example.cycloneconnect.data.GoogleAuthManager
+import androidx.credentials.exceptions.GetCredentialCancellationException
+import androidx.credentials.CredentialManager
+import androidx.credentials.ClearCredentialStateRequest
 
 // Stores the names of all app destinations.
 object AppRoutes {
@@ -47,6 +54,9 @@ fun AppNavigation(
     onThemeChange: (Boolean) -> Unit
 ) {
     val navController = rememberNavController()
+
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
 
     val auth = remember {
         FirebaseAuth.getInstance()
@@ -181,6 +191,19 @@ fun AppNavigation(
                 },
                 onLogoutClick = {
                     auth.signOut()
+
+                    coroutineScope.launch {
+                        try {
+                            CredentialManager.create(context)
+                                .clearCredentialState(
+                                    ClearCredentialStateRequest()
+                                )
+                        } catch (exception: Exception) {
+                            // Firebase logout has already succeeded.
+                            // Credential cleanup failure should not block logout.
+                        }
+                    }
+
                     navController.navigate(AppRoutes.HOME) {
                         popUpTo(AppRoutes.HOME) {
                             inclusive = false
@@ -194,12 +217,10 @@ fun AppNavigation(
         composable(AppRoutes.LOGIN) {
             LoginScreen(
                 onLoginClick = { email, password, onResult ->
-
                     AuthManager().loginUser(
                         email = email,
                         password = password
                     ) { success, message ->
-
                         onResult(success, message)
 
                         if (success) {
@@ -209,6 +230,39 @@ fun AppNavigation(
                                 }
                                 launchSingleTop = true
                             }
+                        }
+                    }
+                },
+
+                onGoogleSignInClick = { onResult ->
+                    coroutineScope.launch {
+                        try {
+                            val idToken = GoogleAuthManager()
+                                .getGoogleIdToken(context)
+
+                            AuthManager().signInWithGoogle(idToken) { success, message ->
+                                onResult(success, message)
+
+                                if (success) {
+                                    navController.navigate(AppRoutes.HOME) {
+                                        popUpTo(AppRoutes.HOME) {
+                                            inclusive = false
+                                        }
+                                        launchSingleTop = true
+                                    }
+                                }
+                            }
+
+                        } catch (exception: GetCredentialCancellationException) {
+                            // User cancelled Google Sign-In.
+                            // Do not display an error message.
+
+                        } catch (exception: Exception) {
+                            onResult(
+                                false,
+                                exception.localizedMessage
+                                    ?: "Google Sign-In failed. Please try again."
+                            )
                         }
                     }
                 },
