@@ -64,7 +64,7 @@ The project is organised into four broad areas:
 
 1. **Big Data processing:** Hadoop HDFS and Spark are used to store and prepare satellite and cyclone-track data.
 2. **Deep Learning:** CNN-based models learn from satellite image patches; ConvLSTM additionally processes a sequence of images.
-3. **Prediction integration:** Model outputs are intended to be exposed through a service and/or used by the mobile application. The uploaded repository snapshot does not contain a FastAPI backend implementation.
+3. **Prediction integration:** Model outputs are intended to be exposed through a service and/or used by the mobile application. 
 4. **Android application:** A Kotlin/Jetpack Compose prototype provides the mobile interface and a local TensorFlow Lite prediction demonstration.
 
 ```mermaid
@@ -177,9 +177,6 @@ The latest modelling review describes the use of infrared window and water-vapou
 
 For the modelling experiment, the target is the cyclone wind speed **six hours after** the input observation time (`TARGET_WIND`). IBTrACS wind-speed values are used as labels/targets; they are not additional input features to the initial satellite-image models.
 
-### SOS message dataset
-
-The project review identifies a disaster-response message dataset from Kaggle as a potential source for SOS priority classification. This dataset relates to the proposed emergency-message component, not the wind-speed regression experiments. The uploaded repository snapshot does not establish a completed SOS text-classification model.
 
 ---
 
@@ -279,8 +276,6 @@ The repository includes TensorFlow Lite model files for CNN, ResNet, and ConvLST
 
 The predicted wind speed can be mapped to an IMD intensity category using the thresholds implemented in `IntensityScale.kt`. The bundled sample demonstrates local inference; it is not a live satellite feed or a live cyclone forecast.
 
-**Archive note:** The uploaded ZIP contains the three `.tflite` model files and the CNN preprocessing/sample assets, but it does not contain all the ResNet/ConvLSTM preprocessing and sample assets referenced by `CyclonePredictor.kt`. Add the matching assets before claiming that all three on-device model paths are runnable from this archive.
-
 ### Firebase configuration
 
 The uploaded Android Gradle configuration includes Firebase Authentication and Credential Manager dependencies. The app navigation imports authentication classes, but the uploaded ZIP does not contain the referenced `data/AuthManager.kt` and `data/GoogleAuthManager.kt` source files or `app/google-services.json`.
@@ -345,8 +340,6 @@ An on-device 1D-CNN/TensorFlow Lite classifier and NLP-based message categorisat
 
 ## Repository Structure
 
-The following reflects the main files present in the uploaded repository archive. Some source/configuration files mentioned in the documentation are not present in this snapshot; see [Current Implementation Status](#current-implementation-status).
-
 ```text
 CycloneConnect/
 ├── app/
@@ -368,7 +361,7 @@ CycloneConnect/
 │       │   ├── CyclonePredictor.kt
 │       │   ├── IntensityScale.kt
 │       │   └── ui/
-│       │       ├── screens/
+│       │       ├── screens/ 
 │       │       └── theme/
 │       └── AndroidManifest.xml
 ├── big_data/
@@ -417,7 +410,6 @@ The project has multiple environments. The steps below describe the intended set
 5. Sync Gradle.
 6. Run the `app` configuration on a device or emulator.
 
-The uploaded archive is not currently a complete standalone build snapshot because of the missing authentication source files and Firebase configuration described above.
 
 ### Big Data pipeline
 
